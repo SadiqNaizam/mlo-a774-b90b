@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { toast } from 'sonner'; // For notifications
+import { toast } from 'sonner';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -30,7 +30,7 @@ type PasswordRecoveryFormValues = z.infer<typeof formSchema>;
 
 const PasswordRecoveryPage = () => {
   console.log('PasswordRecoveryPage loaded');
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Added navigate import, though not used in onSubmit below as per original.
 
   const form = useForm<PasswordRecoveryFormValues>({
     resolver: zodResolver(formSchema),
@@ -41,31 +41,27 @@ const PasswordRecoveryPage = () => {
 
   const onSubmit = async (data: PasswordRecoveryFormValues) => {
     console.log('Password recovery requested for:', data.email);
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     toast.success("Password recovery email sent!", {
       description: "If an account exists for this email, you will receive instructions to reset your password shortly.",
     });
-    // Optionally, navigate the user or clear the form
-    // form.reset();
-    // navigate('/'); // Example: navigate to login after request
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-background"> {/* Updated background */}
       <MinimalHeader />
       <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <AuthFormContainer
           title="Forgot Your Password?"
           footer={
             <div className="text-center space-y-2">
-              <Link to="/" className="text-sm text-blue-600 hover:underline">
+              <Link to="/" className="text-sm text-primary hover:underline"> {/* Updated link color */}
                 Remembered your password? Back to Login
               </Link>
               <p className="text-sm text-muted-foreground">
                 Don't have an account?{' '}
-                <Link to="/registration" className="font-medium text-blue-600 hover:underline">
+                <Link to="/registration" className="font-medium text-primary hover:underline"> {/* Updated link color */}
                   Sign Up
                 </Link>
               </p>
