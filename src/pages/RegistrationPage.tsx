@@ -11,16 +11,15 @@ import MinimalFooter from '@/components/layout/MinimalFooter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { toast } from '@/components/ui/use-toast'; // For displaying success/error messages
+import { toast } from '@/components/ui/use-toast';
 
-// Define the Zod schema for registration
 const registrationFormSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
   password: z.string().min(8, { message: "Password must be at least 8 characters." }),
   confirmPassword: z.string(),
 }).refine(data => data.password === data.confirmPassword, {
   message: "Passwords don't match.",
-  path: ["confirmPassword"], // Path of error
+  path: ["confirmPassword"],
 });
 
 type RegistrationFormValues = z.infer<typeof registrationFormSchema>;
@@ -40,28 +39,25 @@ const RegistrationPage: React.FC = () => {
 
   const onSubmit = (data: RegistrationFormValues) => {
     console.log('Registration form submitted:', data);
-    // TODO: Implement actual registration logic (e.g., API call)
-    // For now, simulate success and navigate to login
     toast({
       title: "Registration Successful!",
       description: "Your account has been created. Please log in.",
     });
-    // Simulate a delay then navigate
     setTimeout(() => {
-      navigate('/'); // Navigate to LoginPage (path from App.tsx)
+      navigate('/');
     }, 1500);
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-background"> {/* Updated background */}
       <MinimalHeader />
       <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <AuthFormContainer
           title="Create your Account"
           footer={
-            <p className="text-sm text-center text-gray-600">
+            <p className="text-sm text-center text-muted-foreground">
               Already have an account?{' '}
-              <Link to="/" className="font-medium text-blue-600 hover:text-blue-500">
+              <Link to="/" className="font-medium text-primary hover:underline"> {/* Updated link color */}
                 Log in
               </Link>
             </p>
@@ -76,7 +72,7 @@ const RegistrationPage: React.FC = () => {
                   <FormItem>
                     <FormLabel>Email address</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="you@example.com" {...field} />
+                      <Input type="email" placeholder="you@example.com" {...field} autoComplete="email" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,7 +85,7 @@ const RegistrationPage: React.FC = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <PasswordField placeholder="Enter your password" {...field} />
+                      <PasswordField placeholder="Enter your password" {...field} autoComplete="new-password" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -102,7 +98,7 @@ const RegistrationPage: React.FC = () => {
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
-                      <PasswordField placeholder="Confirm your password" {...field} />
+                      <PasswordField placeholder="Confirm your password" {...field} autoComplete="new-password" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
