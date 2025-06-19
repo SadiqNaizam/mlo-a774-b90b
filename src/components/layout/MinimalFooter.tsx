@@ -6,10 +6,10 @@ const MinimalFooter: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-6 px-6 border-t bg-gray-50 text-sm text-muted-foreground">
+    <footer className="py-6 px-6 border-t bg-background text-sm text-muted-foreground"> {/* Updated background */}
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         <p className="mb-2 md:mb-0">
-          &copy; {currentYear} Auth Secure. All rights reserved.
+          &copy; {currentYear} AppSecure. All rights reserved.
         </p>
         <nav className="flex gap-4">
           <Link to="/terms" className="hover:text-primary transition-colors">
