@@ -15,7 +15,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-// Note: Label is listed in layout_info, but FormLabel from shadcn/ui Form is more idiomatic here.
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -27,7 +26,7 @@ type LoginFormValues = z.infer<typeof loginFormSchema>;
 
 const LoginPage: React.FC = () => {
   console.log('LoginPage loaded');
-  const navigate = useNavigate(); // For redirection after login, if needed
+  const navigate = useNavigate();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
@@ -40,31 +39,27 @@ const LoginPage: React.FC = () => {
 
   const onSubmit = (values: LoginFormValues) => {
     console.log('Login form submitted:', values);
-    // Simulate API call
+    // Simulate API call and successful login
     // alert(`Logging in with Email: ${values.email}, Remember Me: ${values.rememberMe}`);
     // In a real application, you would handle authentication here.
-    // For example, on successful login:
-    // navigate('/dashboard'); // Replace '/dashboard' with actual target route after login
-    // Since no dashboard route is in App.tsx, we'll just log for now.
-    // For demonstration, let's imagine a successful login navigates to a generic authenticated area.
-    // If there were a '/home' or '/dashboard' route in App.tsx, we'd use that.
-    // For now, just logging.
-    alert("Login functionality would be handled here. Check console for form values.");
+    
+    // For demonstration, navigate to dashboard on "successful" login.
+    navigate('/dashboard'); 
   };
 
   const authFormFooterContent = (
     <>
       <Link
-        to="/password-recovery" // Path from App.tsx
-        className="text-sm text-blue-600 hover:underline dark:text-blue-400"
+        to="/password-recovery"
+        className="text-sm text-primary hover:underline"
       >
         Forgot Password?
       </Link>
-      <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+      <p className="text-sm text-muted-foreground mt-2">
         {"Don't have an account? "}
         <Link
-          to="/registration" // Path from App.tsx
-          className="font-medium text-blue-600 hover:underline dark:text-blue-400"
+          to="/registration"
+          className="font-medium text-primary hover:underline"
         >
           Sign Up
         </Link>
@@ -73,7 +68,7 @@ const LoginPage: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex flex-col min-h-screen bg-background">
       <MinimalHeader />
       <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <AuthFormContainer title="Login to Your Account" footer={authFormFooterContent}>
@@ -86,7 +81,7 @@ const LoginPage: React.FC = () => {
                   <FormItem>
                     <FormLabel>Email Address</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="you@example.com" {...field} />
+                      <Input type="email" placeholder="you@example.com" {...field} autoComplete="email"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -99,7 +94,7 @@ const LoginPage: React.FC = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <PasswordField placeholder="••••••••" {...field} />
+                      <PasswordField placeholder="••••••••" {...field} autoComplete="current-password"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
